@@ -28,6 +28,7 @@ const App = () => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)
             });
+            window.location.reload();
         } catch (err) {
             console.error(err.message);
         }
@@ -41,7 +42,7 @@ const App = () => {
                     'Content-type': 'application/json'
                 }
             });
-            
+            window.location.reload();
         } catch (err) {
             console.error(err.message);
         }
@@ -77,14 +78,14 @@ return (
                     </thead>
                     <tbody>
                         {listaAtividades.map((item, index) => (
-                            <tr key={index} className='m-8 border border-collapse'>
+                            <tr key={index} className='m-8 border'>
                                 <td>
                                     <input type='checkbox' >
                                     </input>
                                 </td>
                                 <td>{item.atividade}</td>
                                 <td>Editar</td>
-                                <td onClick={(e) => deletarAtividade(item.id)}>Apagar</td>
+                                <td className='rounded-full bg-red-500 p-1 cursor-pointer' onClick={(e) => deletarAtividade(item.id)}>Excluir</td>
                             </tr>
                         ))}
                     </tbody>
