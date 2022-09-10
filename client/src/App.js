@@ -72,7 +72,6 @@ return (
                         <tr>
                             <th>Status</th>
                             <th>Atividade</th>
-                            <th>Editar</th>
                             <th>Deletar</th>
                         </tr>
                     </thead>
@@ -85,7 +84,6 @@ return (
                                     </input>
                                 </td>
                                 <td>{item.atividade}</td>
-                                <td>Editar</td>
                                 <td className='rounded-full bg-red-500 p-1 cursor-pointer' onClick={(e) => deletarAtividade(item.id)}>Excluir</td>
                             </tr>
                         ))}
