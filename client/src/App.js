@@ -81,6 +81,7 @@ return (
                             <tr key={index} className='m-8 border'>
                                 <td>
                                     <input type='checkbox' >
+                                        
                                     </input>
                                 </td>
                                 <td>{item.atividade}</td>
