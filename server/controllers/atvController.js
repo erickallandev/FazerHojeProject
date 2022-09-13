@@ -22,20 +22,10 @@ export const editarAtividade = async (req, res) => {
     let item = await Atividade.findByPk(id);
 
     if(item) {
+        item.estado = req.body.estado;
+        
         if(req.body.atividade) {
             item.atividade = req.body.atividade
-        }
-        if(req.body.estado) {
-            switch(req.body.estado.toLowerCase()) {
-                case 'true':
-                case '1':
-                    item.estado = true;
-                    break;
-                case 'false':
-                case '0':
-                    item.estado = false;
-                    break;
-            }
         }
 
         await item.save();
