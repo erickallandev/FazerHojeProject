@@ -63,7 +63,7 @@ const atualizarEstado = async (id, estado) => {
     }
 
 return (
-    <div className="flex flex-col bg-gray-700 box-border min-h-screen justify-start items-center">
+    <div className="flex flex-col bg-gray-700 box-border min-h-screen justify-between items-center">
         <div className='flex flex-col w-10/12'>
 
             <div className='font-black font-lobster text-4xl md:text-6xl italic text-center text-white tracking-wide mt-12'>O que temos para hoje?</div>
@@ -75,7 +75,7 @@ return (
                     
                     <input type='text' placeholder='Insira aqui a sua nova atividade' value={novaAtividade} className='flex w-full md:flex-1 outline-none text-center bg-white rounded-full p-2 md:p-4' onChange={(e) => setNovaAtividade(e.target.value)}></input>
                     
-                    <button className='flex rounded-full w-full md:w-auto hover:bg-white hover:text-gray-700 bg-gray-700 text-white md:ml-5 justify-center items-center font-bold text-sm cursor-pointer p-2 md:p-4 border-2 ease-in duration-200 mt-2 md:mt-0'>Inserir</button>
+                    <button className='flex rounded-full w-full md:w-auto hover:bg-white hover:text-gray-700 bg-gray-700 text-white md:ml-2 justify-center items-center font-bold text-sm cursor-pointer p-2 md:p-4 border-2 ease-in duration-200 mt-2 md:mt-0'>Inserir</button>
                 </form>
             </div>
 
@@ -94,7 +94,7 @@ return (
                             </div>
                         ))}
         </div>
-
+        <footer className='w-full bg-gray-600 text-white text-sm flex justify-center p-4 mt-6'>Developer by <a href='https://www.eawebdev.com' target='_blank' rel='noreferrer' className='mx-1'>EA WebDev</a> 2022</footer>
     </div>
 )
 
