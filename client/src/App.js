@@ -94,7 +94,7 @@ return (
                             </div>
                         ))}
         </div>
-        <footer className='w-full bg-gray-600 text-white text-sm flex justify-center p-4 mt-6'>Developer by <a href='https://www.eawebdev.com' target='_blank' rel='noreferrer' className='mx-1'>EA WebDev</a> 2022</footer>
+        <footer className='w-full bg-gray-600 text-white text-sm flex justify-center p-4 mt-6'>Developed by <a href='https://www.eawebdev.com' target='_blank' rel='noreferrer' className='mx-1'>EA WebDev</a> 2022</footer>
     </div>
 )
 
