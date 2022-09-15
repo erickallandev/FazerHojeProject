@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
-import { db_sequelize } from '../instances/pg.js';
+import db_sequelize from '../instances/pg.js';
 
-export const Atividade = db_sequelize.define('Atividade', {
+const Atividade = db_sequelize.define('Atividade', {
     id: {
         primaryKey: true,
         autoIncrement: true,
@@ -18,3 +18,11 @@ export const Atividade = db_sequelize.define('Atividade', {
     tableName: 'todos',
     timestamps: false
 });
+
+const init = async () => {
+    await Atividade.sync();
+};
+
+init();
+
+export default Atividade

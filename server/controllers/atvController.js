@@ -1,4 +1,4 @@
-import { Atividade } from '../models/atividade.js';
+import Atividade from '../models/atividade.js';
 
 export const listarAtividades = async (req, res) => {
     let atividades = await Atividade.findAll();
