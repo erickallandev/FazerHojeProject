@@ -80,21 +80,23 @@ return (
             </div>
 
             {/* Listar atividades */}
-
+            
                         {listaAtividades.map((item, index) => (
-                            <div key={index} className={`flex items-center justify-center min-h-12 border-4 border-gray-700 rounded-full`}>
-                                <div className='mr-2 flex justify-center items-center'>
-                                    <input className='w-8 h-8 accent-gray-900 hover:accent-gray-500' type='checkbox' checked={item.estado} onClick={() => atualizarEstado(item.id, item.estado)}>
-                                    </input>
+                               <div key={index} className={`flex items-center justify-center min-h-12 border-4 border-gray-700 rounded-full`}>
+                                    <div className='mr-2 flex justify-center items-center'>
+                                        <input className='w-8 h-8 accent-gray-900 hover:accent-gray-500' type='checkbox' checked={item.estado} onChange={() => atualizarEstado(item.id, item.estado)}>
+                                        </input>
+                                    </div>
+                                    
+                                    <div className={`rounded-full flex flex-1 justify-center items-center ${item.estado ? 'bg-gray-600' : 'bg-white'} ${item.estado ? 'text-gray-700' : 'text-gray-900'} ${item.estado? 'hover:none' : 'hover:bg-gray-400'} text-center py-2 px-3`}>{item.atividade}</div>
+                                    
+                                    <div className={`ml-2 flex justify-center items-center rounded-full ${item.estado ? 'bg-red-900' : 'bg-red-600'} text-white cursor-pointer w-10 h-10 hover:scale-125 ease-in duration-100`} onClick={() => deletarAtividade(item.id)}>X</div>
                                 </div>
-                                
-                                <div className={`rounded-full flex flex-1 justify-center items-center ${item.estado ? 'bg-gray-600' : 'bg-white'} ${item.estado ? 'text-gray-700' : 'text-gray-900'} ${item.estado? 'hover:none' : 'hover:bg-gray-400'} text-center py-2 px-3`}>{item.atividade}</div>
-                                
-                                <div className={`ml-2 flex justify-center items-center rounded-full ${item.estado ? 'bg-red-900' : 'bg-red-600'} text-white cursor-pointer w-10 h-10 hover:scale-125 ease-in duration-100`} onClick={() => deletarAtividade(item.id)}>X</div>
-                            </div>
                         ))}
+
+            
         </div>
-        <footer className='w-full bg-gray-600 text-white text-sm flex justify-center p-4 mt-6'>Developed by <a href='https://www.eawebdev.com' target='_blank' rel='noreferrer' className='mx-1'>EA WebDev</a> 2022</footer>
+        <footer className='w-full bg-gray-600 text-white text-sm flex justify-center p-4 mt-6'>Developed by <a href='https://www.eawebdev.com' target='_blank' rel='noreferrer' className='mx-1 hover:text-yellow-500 hover:text ease-in duration-100'>EA WebDev</a> 2022</footer>
     </div>
 )
 
