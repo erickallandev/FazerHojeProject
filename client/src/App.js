@@ -66,7 +66,7 @@ return (
     <div className="flex flex-col bg-gray-700 box-border min-h-screen justify-between items-center">
         <div className='flex flex-col w-10/12'>
 
-            <div className='font-black font-lobster text-4xl md:text-6xl italic text-center text-white tracking-wide mt-12'>O que temos para hoje?</div>
+            <div className='font-black font-lobster text-4xl md:text-6xl italic text-center drop-shadow-md text-white tracking-wide mt-12'>O que temos para hoje?</div>
 
             {/* Adicionar nova atividade */}
 
