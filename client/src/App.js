@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import image1 from '../src/assets/images/Image1.svg';
 
 const App = () => {
     const [novaAtividade, setNovaAtividade] = useState('');
@@ -65,12 +66,18 @@ const atualizarEstado = async (id, estado) => {
 return (
     <div className="flex flex-col bg-gray-700 box-border min-h-screen justify-between items-center">
         <div className='flex flex-col w-10/12'>
+            <div className='flex flex-col md:flex-row justify-center items-center'>
+                
+                <div className='font-black font-lobster text-4xl md:text-6xl italic text-center drop-shadow-md text-white tracking-wide mt-12'>O que temos para hoje?</div>
 
-            <div className='font-black font-lobster text-4xl md:text-6xl italic text-center drop-shadow-md text-white tracking-wide mt-12'>O que temos para hoje?</div>
+                <div className='w-32 md:w-40 mt-6 md:ml-14'>
+                    <img className='' src={image1} alt='' />
+                </div>
 
+            </div>
             {/* Adicionar nova atividade */}
 
-            <div className='flex mt-16 mb-12'>
+            <div className='flex mt-12 md:mt-16 mb-12'>
                 <form onSubmit={onSubmeterForm} className='flex w-full flex-col md:flex-row justify-center items-center'>
                     
                     <input type='text' placeholder='Insira aqui a sua nova atividade' value={novaAtividade} className='flex w-full md:flex-1 outline-none text-center bg-white rounded-full p-2 md:p-4' onChange={(e) => setNovaAtividade(e.target.value)}></input>
