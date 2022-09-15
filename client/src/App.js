@@ -6,7 +6,7 @@ const App = () => {
 
     const getAtividades = async () => {
         try {
-            const response = await fetch('/atividades');
+            const response = await fetch('http://localhost:3001/atividades');
             const jsonData = await response.json();
 
             setListaAtividades(jsonData.atividades);
@@ -17,18 +17,18 @@ const App = () => {
 
     useEffect(() => {
         getAtividades();
-    }, []);
+    }, [listaAtividades]);
 
     const onSubmeterForm = async (e) => {
         e.preventDefault();
         try {
             const body = { atividade: novaAtividade };
-            await fetch("/atividades", {
+            await fetch("http://localhost:3001/atividades", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)
             });
-            window.location.reload();
+            setNovaAtividade('');
         } catch (err) {
             console.error(err.message);
         }
@@ -36,13 +36,13 @@ const App = () => {
 
     const deletarAtividade = async (id) => {
         try {
-            await fetch(`/atividades/${id}`, {
+            await fetch(`http://localhost:3001/atividades/${id}`, {
                 method: "DELETE",
                 headers: {
                     'Content-type': 'application/json'
                 }
             });
-            window.location.reload();
+
         } catch (err) {
             console.error(err.message);
         }
@@ -51,12 +51,12 @@ const App = () => {
 const atualizarEstado = async (id, estado) => {
         try {
             const body = { estado: estado ? false : true };
-            await fetch(`/atividades/${id}`, {
+            await fetch(`http://localhost:3001/atividades/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)
             });
-            window.location.reload();
+
         } catch (err) {
             console.error(err.message);
         }
