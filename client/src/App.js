@@ -6,7 +6,7 @@ const App = () => {
 
     const getAtividades = async () => {
         try {
-            const response = await fetch('http://localhost:3001/atividades');
+            const response = await fetch('/atividades');
             const jsonData = await response.json();
 
             setListaAtividades(jsonData.atividades);
@@ -23,7 +23,7 @@ const App = () => {
         e.preventDefault();
         try {
             const body = { atividade: novaAtividade };
-            await fetch("http://localhost:3001/atividades", {
+            await fetch("/atividades", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)
@@ -36,7 +36,7 @@ const App = () => {
 
     const deletarAtividade = async (id) => {
         try {
-            await fetch(`http://localhost:3001/atividades/${id}`, {
+            await fetch(`/atividades/${id}`, {
                 method: "DELETE",
                 headers: {
                     'Content-type': 'application/json'
@@ -51,7 +51,7 @@ const App = () => {
 const atualizarEstado = async (id, estado) => {
         try {
             const body = { estado: estado ? false : true };
-            await fetch(`http://localhost:3001/atividades/${id}`, {
+            await fetch(`/atividades/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)
