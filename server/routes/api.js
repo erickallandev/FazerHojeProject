@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import bodyParser from 'body-parser';
 import * as atvController from '../controllers/atvController.js';
-import * as contaController from '../controllers/contaController'
+import * as contaController from '../controllers/contaController.js'
 
 const router = Router();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
