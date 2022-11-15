@@ -1,4 +1,4 @@
-import Usuario from '../models/usuario';
+import Usuario from '../models/usuario.js';
 
 export const novaConta = async (req, res) => {
     if (req.body.email && req.body.senha) {
