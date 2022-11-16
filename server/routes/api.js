@@ -12,8 +12,9 @@ router.post('/atividades', urlencodedParser, atvController.novaAtividade);
 router.put('/atividades/:id', urlencodedParser, atvController.editarAtividade);
 router.delete('/atividades/:id', atvController.deletarAtividade);
 
-router.post('/novaconta', contaController.novaConta);
-router.post('/login', contaController.login);
+router.post('/novaconta', urlencodedParser, contaController.novaConta);
+router.post('/login', urlencodedParser, contaController.login);
+router.get('/usuarios', contaController.listarUsuarios);
 
 
 export default router;

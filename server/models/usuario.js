@@ -12,8 +12,7 @@ const Usuario = db_sequelize.define('Usuario', {
         unique: true
     },
     senha: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false
+        type: DataTypes.STRING
     }
 }, {
     tableName: 'usuarios',

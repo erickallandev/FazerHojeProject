@@ -3,7 +3,7 @@ import Usuario from '../models/usuario.js';
 export const novaConta = async (req, res) => {
     if (req.body.email && req.body.senha) {
         let { email, senha } = req.body;
-        let hasUser = await Usuario.findOne({ where: { email } })
+        let hasUser = await Usuario.findOne({ where: { email }});
         if (!hasUser) {
             let novoUsuario = await Usuario.create({ email, senha })
 
@@ -13,7 +13,6 @@ export const novaConta = async (req, res) => {
             res.json({ error: 'Email já existe.' })
         }
     }
-
     res.json({ error: 'Email e/ou senha não enviados.'})
 }
 
@@ -33,4 +32,18 @@ export const login = async (req, res) => {
     }
 
     res.json({status: false})
+}
+
+export const listarUsuarios = async (req, res) => {
+    let usuarios = await Usuario.findAll();
+    let lista = [];
+
+    for(let i in usuarios) {
+        lista.push(usuarios[i].email);
+    }
+    if(lista){
+    res.json({ lista });
+    } else {
+        res.send(error, 'Não há usuários cadastrados.')
+    }
 }
