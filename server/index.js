@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import router from './routes/api.js';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import passport from 'passport';
 
 dotenv.config();
 const server = express();
@@ -15,6 +16,8 @@ const PORT = process.env.PORT || 3001;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+server.use(passport.initialize());
 
 server.use(router);
 
