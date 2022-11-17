@@ -1,53 +1,73 @@
 import Usuario from '../models/usuario.js';
-import JWT from 'jsonwebtoken';
-import dotenv from 'dotenv'
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+import { compareSync, hashSync } from 'bcrypt';
 
 dotenv.config();
 
 export const novaConta = async (req, res) => {
-    if (req.body.email && req.body.senha) {
-        let { email, senha } = req.body;
-        let hasUser = await Usuario.findOne({ where: { email } });
-        if (!hasUser) {
-            let novoUsuario = await Usuario.create({ email, senha })
-
-            const token = JWT.sign(
-                { id: novoUsuario.id, email: novoUsuario.email },
-                process.env.JWT_SECRET_KEY,
-                { expiresIn: '2h' }
-            );
-
-            res.status(201);
-            res.json({ id: novoUsuario.id, token })
-        } else {
-            res.json({ error: 'Email já existe.' })
-        }
+    
+    let hasUser = await Usuario.findOne({ where: { email: req.body.email } });
+    
+    if (hasUser) {
+        res.send({
+            sucess: false,
+            message: 'Usuário já existe.',
+        })
     } else {
-        res.json({ error: 'Email e/ou senha não enviados.' })
-    }
-}
+        const usuario = new Usuario({
+            email: req.body.email,
+            senha: hashSync(req.body.senha, 10)
+        })
+    
+        usuario.save().then(usuario => {
+            res.send({
+                sucess: true,
+                message: 'Usuário criado com sucesso!',
+                usuario: {
+                    id: usuario.id,
+                    email: usuario.email
+                }
+            })
+        }).catch(err => {
+            res.send({
+                sucess: false,
+                message: 'Erro. Tente novamente.',
+                error: err
+            })
+        })}}
+
+        
 
 export const login = async (req, res) => {
-    if (req.body.email && req.body.senha) {
-        let email = req.body.email;
-        let senha = req.body.senha;
-
-        let usuario = await Usuario.findOne({
-            where: { email, senha }
-        });
-
-        if (usuario) {
-            const token = JWT.sign(
-                { id: usuario.id, email: usuario.email },
-                process.env.JWT_SECRET_KEY,
-                { expiresIn: '2h' }
-            );
-
-            res.json({ status: true, token });
-            return;
+    await Usuario.findOne({ where: { email: req.body.email } }).then(usuario => {
+        if(!usuario) {
+            return res.status(401).send({
+                sucess: false,
+                message: 'Usuário não encontrado!'
+            })
         }
-    }
-    res.json({ status: false })
+
+        if(!compareSync(req.body.senha, usuario.senha)) {
+            return res.status(401).send({
+                sucess: false,
+                message: 'Senha incorreta!'
+            })
+        }
+
+        const payload = {
+            email: usuario.email,
+            id: usuario.id
+        }
+
+        const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {expiresIn: '1d'})
+
+        return res.status(200).send({
+            sucess: true,
+            message: 'Logado com sucesso!',
+            token: 'Bearer '+token
+        })
+    })
 }
 
 export const listarUsuarios = async (req, res) => {
@@ -55,7 +75,7 @@ export const listarUsuarios = async (req, res) => {
     let lista = [];
 
     for (let i in usuarios) {
-        lista.push(usuarios[i].email);
+        lista.push(usuarios[i]);
     }
     if (lista) {
         res.json({ lista });
