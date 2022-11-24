@@ -13,6 +13,9 @@ const Atividade = db_sequelize.define('Atividade', {
     estado: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
+    },
+    userID: {
+        type: DataTypes.INTEGER
     }
 }, {
     tableName: 'todos',

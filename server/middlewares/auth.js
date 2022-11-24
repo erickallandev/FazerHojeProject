@@ -4,31 +4,13 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export const Auth = {
-    private: async (req, res, next) => {
-        // Fazer verificação de auth
-        let sucess = false;
-        
-        if(req.headers.authorization) {
+export const verifyJWT = (req, res, next) => {
+    const token = req.headers["Authorization"]
 
-            // Bearer token...
-            const [authType, token] = req.headers.authorization.split(' ');
-            if(authType === 'Bearer') {
-                try {
-                    JWT.verify(token, process.env.JWT_SECRET_KEY);
-
-                    sucess = true;
-                } catch (error) {
-
-                }
-            }
-        }
-
-        if(sucess) {
-            next()
-        } else {
-            res.status(403); // Não permitido
-            res.json({error: 'Não autorizado!'})
-        }
+    if(!token) {
+        res.send({sucess: false, message: "Erro. O token não foi reconhecido.aaa"});
+    } else {
+        let decoded = JWT.verify(token, process.env.JWT_SECRET_KEY)
+        res.send({sucess: true, decoded})
     }
 }

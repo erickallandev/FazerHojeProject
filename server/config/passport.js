@@ -22,6 +22,7 @@ passport.use(new JwtStrategy(options, async (jwt_payload, done) => {
 }));
 
 export const privateRoute = (req, res, next) => {
+
     passport.authenticate('jwt', (err, usuario) => {
         req.usuario = usuario;
         return usuario ? next() : next(notAuthorizedJson);

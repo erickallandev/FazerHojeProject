@@ -6,7 +6,6 @@ import { compareSync, hashSync } from 'bcrypt';
 dotenv.config();
 
 export const novaConta = async (req, res) => {
-    
     let hasUser = await Usuario.findOne({ where: { email: req.body.email } });
     
     if (hasUser) {
@@ -60,12 +59,13 @@ export const login = async (req, res) => {
             id: usuario.id
         }
 
-        const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {expiresIn: '1d'})
+        const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {expiresIn: '1d'})  
 
         return res.status(200).send({
             sucess: true,
             message: 'Logado com sucesso!',
-            token: 'Bearer '+token
+            token: 'Bearer '+token,
+            email: usuario.email
         })
     })
 }
@@ -73,7 +73,7 @@ export const login = async (req, res) => {
 export const listarUsuarios = async (req, res) => {
     let usuarios = await Usuario.findAll();
     let lista = [];
-
+    let usuario = req.usuario;
     for (let i in usuarios) {
         lista.push(usuarios[i]);
     }
