@@ -5,6 +5,11 @@ import { compareSync, hashSync } from 'bcrypt';
 
 dotenv.config();
 
+export const obterUsuario = (req, res) => {
+    let usuario = req.usuario.email;
+    res.send(usuario)
+}
+
 export const novaConta = async (req, res) => {
     let hasUser = await Usuario.findOne({ where: { email: req.body.email } });
     

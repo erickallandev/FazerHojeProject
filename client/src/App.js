@@ -18,14 +18,29 @@ const App = () => {
             email: registrarEmail,
             senha: registrarSenha
         }).then((response) => {
-            if (response.data.sucess) {
-                console.log(response)
-                setInputEmail(response.data.usuario.email)
-                setCriarConta(false)
+            if (!response.data.sucess) {
+                alert("Erro! Por favor, tente novamente.")
             } else {
-                console.log(response)
+                if (response.data.sucess) {
+                    console.log(response)
+                    setInputEmail(response.data.usuario.email)
+                    setCriarConta(false)
+                } else {
+                    console.log(response)
+                }
             }
+
         })
+    }
+
+    const obterUser = async () => {
+        try {
+            let token = localStorage.getItem("token");
+            const response = await Axios.get('/obterusuario', { headers: { Authorization: token } });
+            setUser(response.data)
+        } catch (err) {
+            console.error(err.message);
+        }
     }
 
     const handleCriarConta = () => {
@@ -39,6 +54,7 @@ const App = () => {
         }).then((response) => {
             if (!response.data.sucess) {
                 setLoginStatus(false)
+                alert(response.data.message)
             } else {
                 localStorage.setItem("token", response.data.token)
                 setLoginStatus(true);
@@ -51,6 +67,7 @@ const App = () => {
 
     const getAtividades = async () => {
         try {
+            obterUser();
             let token = localStorage.getItem("token");
             const response = await Axios.get('/atividades', { headers: { Authorization: token } });
             setListaAtividades(response.data.atividades);
@@ -70,10 +87,10 @@ const App = () => {
             const body = { atividade: novaAtividade };
             await fetch("/atividades", {
                 method: "POST",
-                headers: { 
-                "Content-Type": "application/json",
-                "Authorization": `${token}` 
-            },
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `${token}`
+                },
                 body: JSON.stringify(body)
             });
             setNovaAtividade('');
@@ -89,7 +106,7 @@ const App = () => {
                 method: "DELETE",
                 headers: {
                     'Content-type': 'application/json',
-                    "Authorization": `${token}` 
+                    "Authorization": `${token}`
                 }
             });
 
@@ -104,8 +121,10 @@ const App = () => {
             const body = { estado: estado ? false : true };
             await fetch(`/atividades/${id}`, {
                 method: "PUT",
-                headers: { "Content-Type": "application/json",
-                "Authorization": `${token}`  },
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `${token}`
+                },
                 body: JSON.stringify(body)
             });
 
@@ -125,7 +144,7 @@ const App = () => {
                 {loginStatus &&
                     <div className='flex justify-end items-center mt-3'>
                         <div className='text-white mr-5'>Olá, {user}</div>
-                        <div className='inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out' onClick={handleLogout}> Sair </div>
+                        <div className='inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out cursor-pointer' onClick={handleLogout}> Sair </div>
                     </div>
                 }
                 <div className='flex flex-col md:flex-row justify-center items-center'>
@@ -139,16 +158,16 @@ const App = () => {
                         </div>
 
                         <div className='text-white'>
-                            <div className='flex flex-col text-center text-black'>
-                                <input type='text' placeholder='example@email.com' value={inputEmail} onChange={(e) => { setInputEmail(e.target.value) }}>
+                            <div className='flex flex-col text-center text-black w-64 mt-2 mb-2'>
+                                <input className='text-base p-2' type='text' placeholder='usuário123' value={inputEmail} onChange={(e) => { setInputEmail(e.target.value) }}>
                                 </input>
 
-                                <input type='password' placeholder='senha123' onChange={(e) => setInputSenha(e.target.value)}></input>
+                                <input className='text-base p-2' type='password' placeholder='senha123' onChange={(e) => setInputSenha(e.target.value)}></input>
                             </div>
                         </div>
 
                         <div className='text-white'>
-                            <div className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full cursor-pointer' onClick={fazerLogin}>
+                            <div className='text-base mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full cursor-pointer' onClick={fazerLogin}>
                                 Fazer login
                             </div>
                         </div>
@@ -165,17 +184,17 @@ const App = () => {
                             Cadastrar nova conta:
                         </div>
 
-                        <div className='text-white'>
-                            <div className='flex flex-col text-center text-black'>
-                                <input type='text' placeholder='example@email.com' onChange={(e) => { setRegistrarEmail(e.target.value) }}>
+                        <div className='text-white mt-2 mb-2'>
+                            <div className='flex flex-col text-center text-black w-64'>
+                                <input className='text-base p-2' type='text' placeholder='usuário123' onChange={(e) => { setRegistrarEmail(e.target.value) }}>
                                 </input>
 
-                                <input type='password' placeholder='senha123' onChange={(e) => setRegistrarSenha(e.target.value)}></input>
+                                <input className='text-base p-2' type='password' placeholder='senha123' onChange={(e) => setRegistrarSenha(e.target.value)}></input>
                             </div>
                         </div>
 
                         <div className='text-white'>
-                            <div className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full cursor-pointer' onClick={registrarConta}>
+                            <div className='text-base bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full cursor-pointer' onClick={registrarConta}>
                                 Registrar conta
                             </div>
                         </div>
@@ -195,22 +214,22 @@ const App = () => {
                 }
 
                 {/* Listar atividades */}
-                
+
                 {loginStatus && listaAtividades.length > 0 &&
-                <div>
-                {listaAtividades.map((item, index) => (
-                    <div key={index} className={`flex items-center justify-center min-h-12 border-4 border-gray-700 rounded-full`}>
-                        <div className='mr-2 flex justify-center items-center'>
-                            <input className='w-8 h-8 accent-gray-900 hover:accent-gray-500' type='checkbox' checked={item.estado} onChange={() => atualizarEstado(item.id, item.estado)}>
-                            </input>
-                        </div>
+                    <div>
+                        {listaAtividades.map((item, index) => (
+                            <div key={index} className={`flex items-center justify-center min-h-12 border-4 border-gray-700 rounded-full`}>
+                                <div className='mr-2 flex justify-center items-center'>
+                                    <input className='w-8 h-8 accent-gray-900 hover:accent-gray-500' type='checkbox' checked={item.estado} onChange={() => atualizarEstado(item.id, item.estado)}>
+                                    </input>
+                                </div>
 
-                        <div className={`rounded-full flex flex-1 justify-center items-center ${item.estado ? 'bg-gray-600' : 'bg-white'} ${item.estado ? 'text-gray-700' : 'text-gray-900'} ${item.estado ? 'hover:none' : 'hover:bg-gray-400'} text-center py-2 px-3`}>{item.atividade}</div>
+                                <div className={`rounded-full flex flex-1 justify-center items-center ${item.estado ? 'bg-gray-600' : 'bg-white'} ${item.estado ? 'text-gray-700' : 'text-gray-900'} ${item.estado ? 'hover:none' : 'hover:bg-gray-400'} text-center py-2 px-3`}>{item.atividade}</div>
 
-                        <div className={`ml-2 flex justify-center items-center rounded-full ${item.estado ? 'bg-red-900' : 'bg-red-600'} text-white cursor-pointer w-10 h-10 hover:scale-125 ease-in duration-100`} onClick={() => deletarAtividade(item.id)}>X</div>
+                                <div className={`ml-2 flex justify-center items-center rounded-full ${item.estado ? 'bg-red-900' : 'bg-red-600'} text-white cursor-pointer w-10 h-10 hover:scale-125 ease-in duration-100`} onClick={() => deletarAtividade(item.id)}>X</div>
+                            </div>
+                        ))}
                     </div>
-                ))}
-                </div>
                 }
 
 

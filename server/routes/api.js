@@ -16,6 +16,8 @@ router.delete('/atividades/:id', privateRoute, atvController.deletarAtividade);
 router.post('/novaconta', urlencodedParser, contaController.novaConta);
 router.post('/login', urlencodedParser, contaController.login);
 
+router.get('/obterUsuario', privateRoute, contaController.obterUsuario);
+
 router.get('/usuarios', privateRoute, contaController.listarUsuarios);
 
 
